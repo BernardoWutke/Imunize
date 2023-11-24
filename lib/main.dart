@@ -1,15 +1,18 @@
-import 'package:bancodedadosvacina/providers/pessoa_provider.dart';
-import 'package:bancodedadosvacina/providers/vacina_provider.dart';
+import 'package:bancodedadosvacina/providers/cadastrar_pessoa_provider.dart';
+import 'package:bancodedadosvacina/providers/cadastrar_vacina_provider.dart';
+import 'package:bancodedadosvacina/providers/vacinar_provider.dart';
 import 'package:bancodedadosvacina/views/homePage/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => VacinaProvider()),
-          ChangeNotifierProvider(create: (_) => PessoaProvider()),
+          ChangeNotifierProvider(create: (_) => CadastrarVacinaProvider()),
+          ChangeNotifierProvider(create: (_) => CadastrarPessoaProvider()),
+          ChangeNotifierProvider(create: (_) => VacinarProvider()),
         ],
         child: const MyApp(),
       ),

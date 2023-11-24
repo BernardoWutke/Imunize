@@ -1,11 +1,14 @@
 
+import 'package:bancodedadosvacina/views/buscarPopUp/buscar_popup.dart';
+import 'package:bancodedadosvacina/views/cadastrarPessoaPopUp/cadastrarPessoa.dart';
+import 'package:bancodedadosvacina/views/cadastrarVacinaPopUp/cadastrar_vacina.dart';
 import 'package:bancodedadosvacina/views/homePage/button_add_vacina.dart';
+import 'package:bancodedadosvacina/views/vacinarPopUp/vacinar_popup.dart';
 import 'package:flutter/material.dart';
 
 import '../../shareds/colors/app_colors.dart';
 import '../../shareds/fonts/app_fonts.dart';
-import '../cadastrarPessoa/cadastrarPessoa.dart';
-import '../cadastrarVacina/cadastrar_vacina.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,7 +28,7 @@ class HomePage extends StatelessWidget {
         padding: EdgeInsets.all(size.width * 0.05),
         children: [
           AppButtonHome(
-            text: 'Cadastrar Vacina',
+            text: '  Cadastrar Vacina',
             image: 'images/vacina.jpg',
             color: AppColors.vacinaPrimaryAddColor,
             onPressed: (){
@@ -34,7 +37,7 @@ class HomePage extends StatelessWidget {
          ),
           SizedBox(height: size.height * 0.04,),
           AppButtonHome(
-            text: 'Cadastrar Pessoa',
+            text: '  Cadastrar Pessoa',
             image: 'images/cadastrar_pessoa.jpg',
             color: AppColors.pessoaAdd,
             onPressed: (){
@@ -44,15 +47,19 @@ class HomePage extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.04,),
           AppButtonHome(
-            text: 'Vacinar',
+            text: '  Vacinar',
             image: 'images/vacinar.jpg',
             color: AppColors.vacinarColor,
-            onPressed: (){},
+            onPressed: (){
+              vacinarPopUp(context);
+            },
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          buscarPopUp(context);
+        },
         child: const Icon(Icons.search, color: Colors.white,),
         backgroundColor: Colors.deepPurple,
       )
