@@ -14,4 +14,5 @@ class PessoaModel {
 
   PessoaModel({required this.nome, required this.cpf, required this.nomeMae, required this.dataDeNascimento, required this.sexo, required this.estadoCivil, required this.escolaridade, required this.cor, required this.temPlanoSaude, required this.endereco, required this.numeroSus, this.idMorador});
 
+
 }

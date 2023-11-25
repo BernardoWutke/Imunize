@@ -1,20 +1,14 @@
-
 import 'package:bancodedadosvacina/repositories/bd.dart';
 import 'package:bancodedadosvacina/models/pessoa_model.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class CadastrarPessoaProvider extends ChangeNotifier {
-
-
   //Essas lista são apenas buffes, para enviar para o banco de dados vamos usar apenas o primeiro elemento de cada uma
-   List<String> _sexoList = ["Masculino"];
-   List<String> _estadoCivilList = ['Solteiro'];
-   List<String> _escolaridadeList = ['Ensino Fundamental'];
-   List<String> _corList = ['Branco'];
-   List<String> _temPlano = ['Não'];
-
-
+  List<String> _sexoList = [ 'M' ];
+  List<String> _estadoCivilList = ['Solteiro'];
+  List<String> _escolaridadeList = ['Ensino Fundamental'];
+  List<String> _corList = ['Branco'];
+  List<String> _temPlano = ['Não'];
 
   TextEditingController _nomeControler = TextEditingController();
   TextEditingController _cpfController = TextEditingController();
@@ -22,7 +16,6 @@ class CadastrarPessoaProvider extends ChangeNotifier {
   TextEditingController _numeroSUSController = TextEditingController();
   TextEditingController _nomeDaMaeController = TextEditingController();
   TextEditingController _enderecoController = TextEditingController();
-
 
   get nomeController => _nomeControler;
   set nomeController(value) {
@@ -54,6 +47,11 @@ class CadastrarPessoaProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  get enderecoController => _enderecoController;
+  set enderecoController(value) {
+    enderecoController = value;
+    notifyListeners();
+  }
 
   get estadoCivil => _estadoCivilList.first;
   set estadoCivil(value) {
@@ -73,9 +71,6 @@ class CadastrarPessoaProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
-
   get sexo => _sexoList.first;
   set sexo(value) {
     _sexoList.first = value;
@@ -94,28 +89,47 @@ class CadastrarPessoaProvider extends ChangeNotifier {
     _dataNascimentoController.clear();
     _numeroSUSController.clear();
     _nomeDaMaeController.clear();
-
+    _enderecoController.clear();
   }
 
-  void cadastrarPessoa() {
-    PessoaModel pessoa = PessoaModel(
-      nome: nomeController.text,
-      cpf: cpfController.text,
-      nomeMae: nomeDaMaeController.text,
-      dataDeNascimento: dataNascimentController.text,
-      sexo: sexo,
-      estadoCivil: estadoCivil,
-      escolaridade: escolaridade,
-      cor: cor,
-      temPlanoSaude: temPlanoSaude,
-      endereco:  _enderecoController.text,
-      numeroSus: numeroSUSController.text,
-    );
-    BancoDeDados.bd.criarPessoa(pessoa);
+  String cadastrarPessoa() {
+    bool hasEmptyField = false;
 
-    emptyAllControllers();
+    if (nomeController.text.isEmpty ||
+        cpfController.text.isEmpty ||
+        nomeDaMaeController.text.isEmpty ||
+        dataNascimentController.text.isEmpty ||
+        _enderecoController.text.isEmpty ||
+        sexo.isEmpty ||
+        estadoCivil.isEmpty ||
+        escolaridade.isEmpty ||
+        cor.isEmpty ||
+        temPlanoSaude.isEmpty ||
+        numeroSUSController.text.isEmpty) {
+      hasEmptyField = true;
+    }
+
+    if (hasEmptyField) {
+      return "Erro: Preencha todos os campos.";
+    } else {
+      PessoaModel pessoa = PessoaModel(
+        nome: nomeController.text,
+        cpf: cpfController.text,
+        nomeMae: nomeDaMaeController.text,
+        dataDeNascimento: dataNascimentController.text,
+        sexo: sexo,
+        estadoCivil: estadoCivil,
+        escolaridade: escolaridade,
+        cor: cor,
+        temPlanoSaude: temPlanoSaude,
+        endereco: _enderecoController.text,
+        numeroSus: numeroSUSController.text,
+      );
+      BancoDeDados.bd.criarPessoa(pessoa);
+
+      emptyAllControllers();
+
+      return "Cadastrado com sucesso";
+    }
   }
-
-
-
 }

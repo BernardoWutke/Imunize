@@ -3,6 +3,7 @@ import 'package:bancodedadosvacina/shareds/colors/app_colors.dart';
 import 'package:bancodedadosvacina/shareds/fonts/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bancodedadosvacina/views/dialog_confirm.dart';
 
 Future<void> cadastrarVacinaPopUp(BuildContext context) async {
     var size = MediaQuery.of(context).size;
@@ -91,7 +92,10 @@ Future<void> cadastrarVacinaPopUp(BuildContext context) async {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        String cadastroBuffer = provider.cadastrarVacina();
+                        dialogConfirm(context, cadastroBuffer);
+                      },
                       child:  Text('Cadastrar', style: AppFonts.titleBar,),
                       style: ElevatedButton.styleFrom(
                         primary: AppColors.vacinaPrimaryAddColor,

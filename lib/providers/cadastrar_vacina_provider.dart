@@ -1,4 +1,5 @@
-
+import 'package:bancodedadosvacina/repositories/bd.dart';
+import 'package:bancodedadosvacina/models/vacina_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,5 +44,46 @@ class CadastrarVacinaProvider extends ChangeNotifier {
     _validadeController.text = value.toString().split(" ")[0];
     notifyListeners();
   }
+
+  void emptyAllControllers() {
+    _nomeController.clear();
+    _fabricanteController.clear();
+    _nomeController.clear();
+    _dosesController.clear();
+    _validadeController.clear();
+    _loteController.clear();
+  }
+
+  String cadastrarVacina() {
+    bool hasEmptyField = false;
+
+    if (nomeController.text.isEmpty ||
+      loteController.text.isEmpty ||
+      fabricanteController.text.isEmpty ||
+      dosesController.text.isEmpty ||
+      validadeController.text.isEmpty) {
+    hasEmptyField = true;
+  }
+
+  if (hasEmptyField) {
+    return "Erro: Preencha todos os campos.";
+  }     
+
+  else {
+    VacinaModel vacina = VacinaModel(
+      fabricante: fabricanteController.text,
+      lote: loteController.text,
+      nome: nomeController.text,
+      doses: dosesController.text,
+      validade: _validadeController.text,
+    );
+    BancoDeDados.bd.criarVacina(vacina);
+
+    emptyAllControllers();
+
+    return "Cadastrado com sucesso";
+
+  }
+}
 
 }

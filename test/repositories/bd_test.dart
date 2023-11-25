@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:http/http.dart' as http;
+
 void main() {
 
   String jsonTest = ("""[
@@ -22,10 +24,15 @@ void main() {
         "dataValidade": "2023-12-31"
     }
 ]""" );
+
+
+
   testWidgets('bd ...', (tester) async {
-     print("iniciando teste..");
-     final pessoa  =  jsonDecode(jsonTest);
-     print(pessoa[1]);
+    final response = await http.get(Uri.parse('http://0.tcp.sa.ngrok.io:14728/moradorCPF/12345678901'));
+    print(response.body);
+
+
+
   });
 
   

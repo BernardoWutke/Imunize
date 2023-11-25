@@ -3,31 +3,48 @@ import 'package:flutter/material.dart';
 
 class VacinarProvider extends ChangeNotifier {
 
-  TextEditingController _nomeVacina = TextEditingController();
-  TextEditingController _numeroSus = TextEditingController();
+  TextEditingController _idVacina = TextEditingController();
+  TextEditingController _cpf = TextEditingController();
+  TextEditingController _dose = TextEditingController();
 
-  get nomeVacina => _nomeVacina;
-  set nomeVacina(value) {
-    _nomeVacina = value;
+
+  get idVacina => _idVacina;
+  set idVacina(value) {
+    _idVacina = value;
     notifyListeners();
   }
 
-  get numeroSus => _numeroSus;
-  set numeroSus(value) {
-    _numeroSus = value;
+  get cpf => _cpf;
+  set cpf(value) {
+    _cpf = value;
+    notifyListeners();
+  }
+
+  get dose => _dose;
+
+  set dose(value) {
+    _dose = value;
     notifyListeners();
   }
 
   void empty(){
-    _nomeVacina.clear();
-    _numeroSus.clear();
+    _idVacina.clear();
+    _cpf.clear();
     notifyListeners();
   }
 
   bool vacinar(){
-      bool confirmacao =  BancoDeDados.bd.vacinarPessoa(_numeroSus.text, _nomeVacina.text);
-      empty();
-      return confirmacao;
+      print("id " +  _idVacina.text);
+      print("cpf "+ _cpf.text);
+      print("dose "+  _dose.text);
+      
+      
+      if ( _idVacina.text.isEmpty || _cpf.text.isEmpty || _dose.text.isEmpty){
+        return false;
+      } else {
+        BancoDeDados.bd.vacinar(_idVacina.text, _cpf.text, _dose.text);
+        return true;
+      }
   }
 
   

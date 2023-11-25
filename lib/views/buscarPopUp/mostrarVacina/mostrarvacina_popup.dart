@@ -7,9 +7,9 @@ import 'package:bancodedadosvacina/shareds/fonts/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> mostarVacinasPopUp(BuildContext context, String lote) async {
+Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas) async {
   var size = MediaQuery.of(context).size;
-  List<VacinaModel> vacinas = BancoDeDados.bd.vacinaBusca;
+
   return showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -59,7 +59,13 @@ Future<void> mostarVacinasPopUp(BuildContext context, String lote) async {
                                     style: AppFonts.titleBar,
                                   ),
                                 ),
-                                
+                                SizedBox(
+                                  height: size.height * 0.02,
+                                ),
+                                Text(
+                                  "ID: ${vacina.idVacina}" ,
+                                  style: AppFonts.titleButtonBlack,
+                                ),
                                 SizedBox(
                                   height: size.height * 0.02,
                                 ),

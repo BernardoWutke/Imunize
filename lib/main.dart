@@ -1,3 +1,4 @@
+import 'package:bancodedadosvacina/providers/busca_provider.dart';
 import 'package:bancodedadosvacina/providers/cadastrar_pessoa_provider.dart';
 import 'package:bancodedadosvacina/providers/cadastrar_vacina_provider.dart';
 import 'package:bancodedadosvacina/providers/vacinar_provider.dart';
@@ -13,6 +14,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => CadastrarVacinaProvider()),
           ChangeNotifierProvider(create: (_) => CadastrarPessoaProvider()),
           ChangeNotifierProvider(create: (_) => VacinarProvider()),
+          ChangeNotifierProvider(create: (_) => BuscaProvider()),
         ],
         child: const MyApp(),
       ),
