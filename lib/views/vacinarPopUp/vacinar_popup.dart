@@ -12,7 +12,7 @@ Future<void> vacinarPopUp(BuildContext context) async {
   return showDialog(
       context: context,
       builder: (context) => Dialog(
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: SingleChildScrollView(
                 child: Consumer<VacinarProvider>(
@@ -42,7 +42,7 @@ Future<void> vacinarPopUp(BuildContext context) async {
                               children: [
                                 Column(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       width: size.width * 0.3,
                                       child: TextField(
                                         controller: provider.idVacina,
@@ -52,10 +52,10 @@ Future<void> vacinarPopUp(BuildContext context) async {
                                         ),
                                       ),
                                     ),
-                                     SizedBox(
+                                    SizedBox(
                                       height: size.height * 0.02,
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: size.width * 0.3,
                                       child: TextField(
                                         controller: provider.dose,
@@ -70,11 +70,9 @@ Future<void> vacinarPopUp(BuildContext context) async {
                                 ElevatedButton(
                                   onPressed: () {
                                     if (provider.vacinar()) {
-                                      dialogConfirm(context,
-                                          'Vacinação realizada com sucesso');
+                                      dialogConfirm(context, 'Vacinação realizada com sucesso');
                                     } else {
-                                      dialogConfirm(
-                                          context, 'Dados incorretos');
+                                      dialogConfirm(context, 'Dados incorretos');
                                     }
                                   },
                                   child: Container(
@@ -82,8 +80,7 @@ Future<void> vacinarPopUp(BuildContext context) async {
                                     width: size.height * 0.06,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                        image:
-                                            AssetImage('images/vacinaIcon.png'),
+                                        image: AssetImage('images/vacinaIcon.png'),
                                         fit: BoxFit.fitWidth,
                                       ),
                                       borderRadius: BorderRadius.only(
@@ -93,7 +90,7 @@ Future<void> vacinarPopUp(BuildContext context) async {
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width: size.width * 0.3,
                                   child: TextField(
                                     controller: provider.cpf,

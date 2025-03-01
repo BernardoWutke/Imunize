@@ -6,19 +6,17 @@ class AppButtonHome extends StatelessWidget {
   String image;
   String text;
   Color color;
-  AppButtonHome({super.key,required this.text, required this.image,required this.color,required this.onPressed});
+  AppButtonHome({super.key, required this.text, required this.image, required this.color, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
-    return  GestureDetector(
-
+    return GestureDetector(
       onTap: onPressed,
       child: Column(
         children: [
           Container(
-            decoration:   BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -26,15 +24,17 @@ class AppButtonHome extends StatelessWidget {
               color: color,
             ),
             width: double.infinity,
-
-            child: Text(" " + text, style: AppFonts.titleButton,),
+            child: Text(
+              " $text",
+              style: AppFonts.titleButton,
+            ),
           ),
           Container(
             height: size.height * 0.3,
             width: double.infinity,
-            decoration:  BoxDecoration(
-              image:  DecorationImage(
-                image:  AssetImage(image),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(image),
                 fit: BoxFit.fitWidth,
               ),
               borderRadius: const BorderRadius.only(
@@ -42,9 +42,7 @@ class AppButtonHome extends StatelessWidget {
                 bottomRight: Radius.circular(20),
               ),
             ),
-
-            ),
-
+          ),
         ],
       ),
     );

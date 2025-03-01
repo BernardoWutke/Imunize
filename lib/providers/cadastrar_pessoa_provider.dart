@@ -1,21 +1,23 @@
+import 'dart:math';
+
 import 'package:bancodedadosvacina/repositories/bd.dart';
 import 'package:bancodedadosvacina/models/pessoa_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class CadastrarPessoaProvider extends ChangeNotifier {
   //Essas lista são apenas buffes, para enviar para o banco de dados vamos usar apenas o primeiro elemento de cada uma
-  List<String> _sexoList = [ 'M' ];
-  List<String> _estadoCivilList = ['Solteiro'];
-  List<String> _escolaridadeList = ['Ensino Fundamental'];
-  List<String> _corList = ['Branco'];
-  List<String> _temPlano = ['Não'];
+  final List<String> _sexoList = ['M'];
+  final List<String> _estadoCivilList = ['Solteiro'];
+  final List<String> _escolaridadeList = ['Ensino Fundamental'];
+  final List<String> _corList = ['Branco'];
+  final List<String> _temPlano = ['Não'];
 
   TextEditingController _nomeControler = TextEditingController();
   TextEditingController _cpfController = TextEditingController();
-  TextEditingController _dataNascimentoController = TextEditingController();
+  final TextEditingController _dataNascimentoController = TextEditingController();
   TextEditingController _numeroSUSController = TextEditingController();
   TextEditingController _nomeDaMaeController = TextEditingController();
-  TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _enderecoController = TextEditingController();
 
   get nomeController => _nomeControler;
   set nomeController(value) {
@@ -92,7 +94,7 @@ class CadastrarPessoaProvider extends ChangeNotifier {
     _enderecoController.clear();
   }
 
-  String cadastrarPessoa() {
+  Future<String> cadastrarPessoa() async {
     bool hasEmptyField = false;
 
     if (nomeController.text.isEmpty ||
@@ -125,11 +127,12 @@ class CadastrarPessoaProvider extends ChangeNotifier {
         endereco: _enderecoController.text,
         numeroSus: numeroSUSController.text,
       );
-      BancoDeDados.bd.criarPessoa(pessoa);
+
+      String response = await BancoDeDados.bd.criarPessoa(pessoa);
 
       emptyAllControllers();
 
-      return "Cadastrado com sucesso";
+      return response;
     }
   }
 }

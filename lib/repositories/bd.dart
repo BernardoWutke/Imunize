@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 
+import 'package:bancodedadosvacina/models/error_model.dart';
 import 'package:bancodedadosvacina/models/pessoa_model.dart';
 import 'package:bancodedadosvacina/models/vacina_model.dart';
 import 'package:bancodedadosvacina/models/vacinacao_model.dart';
@@ -60,8 +62,9 @@ String pessoaJsonTest = ("""[
 class BancoDeDados {
   static BancoDeDados bd = BancoDeDados();
 
-  String link = "0.tcp.sa.ngrok.io:14728";
-  void criarPessoa(PessoaModel pessoa) async {
+  String link = "25.35.53.65:3000";
+
+  Future<String> criarPessoa(PessoaModel pessoa) async {
     //criar um post para o banco de dados
 
     Map<String, dynamic> dados = {
@@ -85,13 +88,19 @@ class BancoDeDados {
       Uri.parse('http://$link/morador'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'host': '0.tcp.sa.ngrok.io:14728',
+        'host': link,
         'Content-Length': contentLength
       },
       body: jsonEncode(dados),
     );
 
-    print(response.request.toString());
+    var responseJson = jsonDecode(response.body);
+
+    Response msg = new Response(message: responseJson["message"]);
+
+    print(msg);
+
+    return msg.message;
   }
 
   void criarVacina(VacinaModel vacina) async {
@@ -113,7 +122,7 @@ class BancoDeDados {
       Uri.parse('http://$link/vacinas'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'host': '0.tcp.sa.ngrok.io:14728',
+        'host': link,
         'Content-Length': contentLength
       },
       body: jsonEncode(dados),
@@ -122,12 +131,12 @@ class BancoDeDados {
     print(response.request.toString());
   }
 
-  void vacinar(String id_vacina, String cpf, String dose) async {
+  void vacinar(String idVacina, String cpf, String dose) async {
     //Uri url = Uri.http(link, '$link/vacina');
 
     // Dados que você deseja enviar no corpo da requisição
     Map<String, dynamic> dados = {
-      "idVacina": id_vacina,
+      "idVacina": idVacina,
       "CPFmorador": cpf,
       "doseMinistrada": int.parse(dose),
     };
@@ -146,7 +155,6 @@ class BancoDeDados {
     );
 
     print(response.request.toString());
-
   }
 
 //12345678901
@@ -154,7 +162,7 @@ class BancoDeDados {
     List<PessoaModel> pessoas = [];
     List<PessoaModel> pessoasBuff = [];
     //Response response = await Dio().get("http://0.tcp.sa.ngrok.io:14728/moradorCPF/${cpf}");
-    Uri uri = Uri.http(link, "/moradorCPF/${cpf}");
+    Uri uri = Uri.http(link, "/moradorCPF/$cpf");
 
     final response = await http.get(uri);
 
@@ -164,21 +172,22 @@ class BancoDeDados {
       return pessoas;
     } else {
       var pessoasJson = jsonDecode(response.body);
-
-      print(pessoasJson[0]);
+      print(pessoasJson);
 
       PessoaModel pessoaRetorno = PessoaModel(
           cpf: pessoasJson[0]["cpf"],
-          numeroSus: pessoasJson[0]["numeroSus"],
+          numeroSus: pessoasJson[0]["numeroSUS"],
           nome: pessoasJson[0]["nome"],
           nomeMae: pessoasJson[0]["nomedaMae"],
           sexo: pessoasJson[0]["sexo"],
-          endereco: pessoasJson[0]["endereço"],
+          endereco: pessoasJson[0]["endereco"],
           temPlanoSaude: (pessoasJson[0]["plano"] == "1") ? "Sim" : "Não",
           estadoCivil: pessoasJson[0]["estadoCivil"],
           escolaridade: pessoasJson[0]["escolaridade"],
           cor: pessoasJson[0]["cor"],
-          dataDeNascimento: pessoasJson[0]["dataDeNascimento"]);
+          dataDeNascimento: pessoasJson[0]["dataNascimento"]);
+
+      print(pessoaRetorno.toString());
 
       pessoas.add(pessoaRetorno);
       return pessoas;
@@ -189,12 +198,15 @@ class BancoDeDados {
     List<VacinaModel> vacinasBuffer = [];
 
     //Response response = await Dio().get("http://0.tcp.sa.ngrok.io:14728/moradorCPF/${cpf}");
-    Uri uri = Uri.http(link, "/vacinas/${lote}");
+    Uri uri = Uri.http(link, "/vacinas/$lote");
 
     final response = await http.get(uri);
     var vacinasJson = jsonDecode(response.body);
 
+    print(vacinasJson);
+
     if (response.body.toString() == "[]") {
+      log("entrou aqui");
       return vacinasBuffer;
     }
 
@@ -207,9 +219,10 @@ class BancoDeDados {
         doses: vacina["quantidadeDoses"],
         validade: vacina["dataValidade"],
       );
+      log(vacinaModel.toString(), name: "vacinaModel");
+
       vacinasBuffer.add(vacinaModel);
     }
-
     return vacinasBuffer;
   }
 
@@ -217,7 +230,8 @@ class BancoDeDados {
     List<VacinacaoModel> vacinacaoBuffer = [];
 
     //Response response = await Dio().get("http://0.tcp.sa.ngrok.io:14728/moradorCPF/${cpf}");
-    Uri uri = Uri.http(link, "/vacinacao/${cpf}");
+
+    Uri uri = Uri.http(link, "/vacinacao/$cpf");
 
     final response = await http.get(uri);
 
@@ -227,7 +241,7 @@ class BancoDeDados {
       return [];
     }
 
-    var vacinacaoJson = jsonDecode(response.body);
+    var vacinacaoJson = jsonDecode(response.body.toString());
 
     for (var vacinacao in vacinacaoJson) {
       VacinacaoModel vacinacaoModel = VacinacaoModel(

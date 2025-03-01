@@ -1,24 +1,25 @@
+import 'dart:developer';
+
 import 'package:bancodedadosvacina/models/pessoa_model.dart';
 import 'package:bancodedadosvacina/models/vacina_model.dart';
 import 'package:bancodedadosvacina/models/vacinacao_model.dart';
 import 'package:bancodedadosvacina/repositories/bd.dart';
 import 'package:flutter/material.dart';
 
-class BuscaProvider extends ChangeNotifier{
+class BuscaProvider extends ChangeNotifier {
   late List<PessoaModel> pessoa;
 
   late List<VacinaModel> vacinas;
 
   late List<VacinacaoModel> vacinacaos;
 
-
   Future<bool> getPessoa(String cpf) async {
-    if (cpf == ""){
+    if (cpf == "") {
       return false;
     }
 
     var pessoa = await BancoDeDados.bd.buscarPessoaHttp(cpf);
-    if(pessoa.isEmpty){
+    if (pessoa.isEmpty) {
       notifyListeners();
       return false;
     } else {
@@ -29,38 +30,37 @@ class BuscaProvider extends ChangeNotifier{
   }
 
   Future<bool> getVacina(String lote) async {
-    if (lote == ""){
+    if (lote == "") {
       return false;
     }
 
     var vacina = await BancoDeDados.bd.buscarLoteVacina(lote);
-    
-    if(vacina.isEmpty){
+
+    log(vacina.toString(), name: "BuscaProvider");
+
+    if (vacina.isEmpty) {
       notifyListeners();
       return false;
     } else {
-      this.vacinas = vacina;
-      
+      vacinas = vacina;
+
       return true;
     }
   }
 
-
   Future<bool> getVacinaCpf(String cpf) async {
-    if (cpf == ""){
+    if (cpf == "") {
       return false;
     }
 
     var vacinacao = await BancoDeDados.bd.buscavacinacao(cpf);
-    
-    if(vacinacao.isEmpty){
+
+    if (vacinacao.isEmpty) {
       notifyListeners();
       return false;
     } else {
-      this.vacinacaos = vacinacao;
+      vacinacaos = vacinacao;
       return true;
     }
   }
-
-
 }
