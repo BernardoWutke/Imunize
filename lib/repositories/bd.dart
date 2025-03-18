@@ -68,14 +68,14 @@ class BancoDeDados {
     //criar um post para o banco de dados
 
     Map<String, dynamic> dados = {
-      "CPF": pessoa.cpf,
-      "numeroSUS": int.parse(pessoa.numeroSus),
+      "cpf": pessoa.cpf,
+      "numeroSus": int.parse(pessoa.numeroSus),
       "nome": pessoa.nome,
-      "dataNascimento": pessoa.dataDeNascimento,
-      "nomeDaMae": pessoa.nomeMae,
+      "dataDeNascimento": pessoa.dataDeNascimento,
+      "nomeMae": pessoa.nomeMae,
       "sexo": pessoa.sexo,
       "endereco": pessoa.endereco,
-      "plano": (pessoa.temPlanoSaude == "Sim") ? true : false,
+      "temPlanoSaude": (pessoa.temPlanoSaude == "Sim") ? true : false,
       "estadoCivil": pessoa.estadoCivil,
       "escolaridade": pessoa.escolaridade,
       "cor": pessoa.cor
@@ -176,16 +176,16 @@ class BancoDeDados {
 
       PessoaModel pessoaRetorno = PessoaModel(
           cpf: pessoasJson[0]["cpf"],
-          numeroSus: pessoasJson[0]["numeroSUS"],
+          numeroSus: pessoasJson[0]["numeroSus"],
           nome: pessoasJson[0]["nome"],
-          nomeMae: pessoasJson[0]["nomedaMae"],
+          nomeMae: pessoasJson[0]["nomeMae"],
           sexo: pessoasJson[0]["sexo"],
           endereco: pessoasJson[0]["endereco"],
-          temPlanoSaude: (pessoasJson[0]["plano"] == "1") ? "Sim" : "Não",
+          temPlanoSaude: (pessoasJson[0]["temPlanoSaude"] == "1") ? "Sim" : "Não",
           estadoCivil: pessoasJson[0]["estadoCivil"],
           escolaridade: pessoasJson[0]["escolaridade"],
           cor: pessoasJson[0]["cor"],
-          dataDeNascimento: pessoasJson[0]["dataNascimento"]);
+          dataDeNascimento: pessoasJson[0]["dataDeNascimento"]);
 
       print(pessoaRetorno.toString());
 
