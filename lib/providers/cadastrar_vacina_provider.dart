@@ -8,7 +8,7 @@ class CadastrarVacinaProvider extends ChangeNotifier {
   TextEditingController _fabricanteController = TextEditingController();
   TextEditingController _loteController = TextEditingController();
   TextEditingController _dosesController = TextEditingController();
-  TextEditingController _validadeController = TextEditingController();
+  final TextEditingController _validadeController = TextEditingController();
 
   get nomeController => _nomeController;
 
@@ -58,32 +58,28 @@ class CadastrarVacinaProvider extends ChangeNotifier {
     bool hasEmptyField = false;
 
     if (nomeController.text.isEmpty ||
-      loteController.text.isEmpty ||
-      fabricanteController.text.isEmpty ||
-      dosesController.text.isEmpty ||
-      validadeController.text.isEmpty) {
-    hasEmptyField = true;
+        loteController.text.isEmpty ||
+        fabricanteController.text.isEmpty ||
+        dosesController.text.isEmpty ||
+        validadeController.text.isEmpty) {
+      hasEmptyField = true;
+    }
+
+    if (hasEmptyField) {
+      return "Erro: Preencha todos os campos.";
+    } else {
+      VacinaModel vacina = VacinaModel(
+        fabricante: fabricanteController.text,
+        lote: loteController.text,
+        nome: nomeController.text,
+        doses: dosesController.text,
+        validade: _validadeController.text,
+      );
+      BancoDeDados.bd.criarVacina(vacina);
+
+      emptyAllControllers();
+
+      return "Cadastrado com sucesso";
+    }
   }
-
-  if (hasEmptyField) {
-    return "Erro: Preencha todos os campos.";
-  }     
-
-  else {
-    VacinaModel vacina = VacinaModel(
-      fabricante: fabricanteController.text,
-      lote: loteController.text,
-      nome: nomeController.text,
-      doses: dosesController.text,
-      validade: _validadeController.text,
-    );
-    BancoDeDados.bd.criarVacina(vacina);
-
-    emptyAllControllers();
-
-    return "Cadastrado com sucesso";
-
-  }
-}
-
 }

@@ -2,11 +2,9 @@ import 'package:bancodedadosvacina/repositories/bd.dart';
 import 'package:flutter/material.dart';
 
 class VacinarProvider extends ChangeNotifier {
-
   TextEditingController _idVacina = TextEditingController();
   TextEditingController _cpf = TextEditingController();
   TextEditingController _dose = TextEditingController();
-
 
   get idVacina => _idVacina;
   set idVacina(value) {
@@ -27,27 +25,22 @@ class VacinarProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void empty(){
+  void empty() {
     _idVacina.clear();
     _cpf.clear();
     notifyListeners();
   }
 
-  bool vacinar(){
-      print("id " +  _idVacina.text);
-      print("cpf "+ _cpf.text);
-      print("dose "+  _dose.text);
-      
-      
-      if ( _idVacina.text.isEmpty || _cpf.text.isEmpty || _dose.text.isEmpty){
-        return false;
-      } else {
-        BancoDeDados.bd.vacinar(_idVacina.text, _cpf.text, _dose.text);
-        return true;
-      }
+  bool vacinar() {
+    print("id ${_idVacina.text}");
+    print("cpf ${_cpf.text}");
+    print("dose ${_dose.text}");
+
+    if (_idVacina.text.isEmpty || _cpf.text.isEmpty || _dose.text.isEmpty) {
+      return false;
+    } else {
+      BancoDeDados.bd.vacinar(_idVacina.text, _cpf.text, _dose.text);
+      return true;
+    }
   }
-
-  
-
-
 }

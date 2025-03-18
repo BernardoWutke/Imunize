@@ -1,4 +1,5 @@
 import 'package:bancodedadosvacina/models/vacina_model.dart';
+import 'package:bancodedadosvacina/models/vacinacao_model.dart';
 import 'package:bancodedadosvacina/providers/cadastrar_vacina_provider.dart';
 import 'package:bancodedadosvacina/providers/vacinar_provider.dart';
 import 'package:bancodedadosvacina/repositories/bd.dart';
@@ -7,7 +8,7 @@ import 'package:bancodedadosvacina/shareds/fonts/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas) async {
+Future<void> mostrarVacinacao(BuildContext context, List<VacinacaoModel> vacinas) async {
   var size = MediaQuery.of(context).size;
 
   return showDialog(
@@ -29,7 +30,7 @@ Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas)
                           color: AppColors.vacinarColor,
                         ),
                         child: Text(
-                          "   Vacinas",
+                          "   Vacinas do Morador",
                           style: AppFonts.titleBar,
                         ),
                       ),
@@ -54,7 +55,7 @@ Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas)
                                     color: Color(0xFF5E5D8F),
                                   ),
                                   child: Text(
-                                    "   ${vacina.nome}",
+                                    "   ${vacina.nomeVacina}",
                                     style: AppFonts.titleBar,
                                   ),
                                 ),
@@ -62,7 +63,7 @@ Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas)
                                   height: size.height * 0.02,
                                 ),
                                 Text(
-                                  "ID: ${vacina.idVacina}",
+                                  "Nome do morador: ${vacina.nomeMorador}",
                                   style: AppFonts.titleButtonBlack,
                                 ),
                                 SizedBox(
@@ -76,21 +77,14 @@ Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas)
                                   height: size.height * 0.02,
                                 ),
                                 Text(
-                                  "Lote: ${vacina.lote}",
+                                  "Dose Ministrada: ${vacina.doseMinistrada}",
                                   style: AppFonts.titleButtonBlack,
                                 ),
                                 SizedBox(
                                   height: size.height * 0.02,
                                 ),
                                 Text(
-                                  "Doses: ${vacina.doses}",
-                                  style: AppFonts.titleButtonBlack,
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.02,
-                                ),
-                                Text(
-                                  "Validade: ${vacina.validade}",
+                                  "Data: ${vacina.dataVacinacao}",
                                   style: AppFonts.titleButtonBlack,
                                 ),
                                 SizedBox(
@@ -125,3 +119,5 @@ Future<void> mostarVacinasPopUp(BuildContext context, List<VacinaModel> vacinas)
             ),
           ));
 }
+
+//fazer um pop up para mostrar as vacinas do morador

@@ -3,27 +3,26 @@ import 'package:bancodedadosvacina/providers/cadastrar_pessoa_provider.dart';
 import 'package:bancodedadosvacina/providers/cadastrar_vacina_provider.dart';
 import 'package:bancodedadosvacina/providers/vacinar_provider.dart';
 import 'package:bancodedadosvacina/views/homePage/home_page.dart';
+import 'package:bancodedadosvacina/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => CadastrarVacinaProvider()),
-          ChangeNotifierProvider(create: (_) => CadastrarPessoaProvider()),
-          ChangeNotifierProvider(create: (_) => VacinarProvider()),
-          ChangeNotifierProvider(create: (_) => BuscaProvider()),
-        ],
-        child: const MyApp(),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CadastrarVacinaProvider()),
+        ChangeNotifierProvider(create: (_) => CadastrarPessoaProvider()),
+        ChangeNotifierProvider(create: (_) => VacinarProvider()),
+        ChangeNotifierProvider(create: (_) => BuscaProvider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,5 +36,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

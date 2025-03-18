@@ -11,7 +11,7 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
   return showDialog(
     context: context,
     builder: (context) => Dialog(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: SingleChildScrollView(
           child: Consumer<CadastrarPessoaProvider>(
@@ -98,7 +98,9 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
                       lastDate: DateTime(2100),
                     );
 
-                    provider.dataNascimentoControllerSet(data!);
+                    if (data != null) {
+                      provider.dataNascimentoControllerSet(data);
+                    }
                   },
                 ),
               ),
@@ -127,8 +129,7 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
                         provider.sexo = newValue;
                         print(provider.sexo);
                       },
-                      items: <String>['M', 'F']
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: <String>['M', 'F'].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
@@ -166,8 +167,7 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
                         provider.temPlanoSaude = newValue;
                         print(provider.temPlanoSaude);
                       },
-                      items: <String>['Sim', 'Não']
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: <String>['Sim', 'Não'].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
@@ -204,13 +204,8 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
                       onChanged: (newValue) {
                         provider.estadoCivil = newValue;
                       },
-                      items: <String>[
-                        'Solteiro',
-                        'Casado',
-                        'Divorciado',
-                        'Viúvo',
-                        'Outro'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: <String>['Solteiro', 'Casado', 'Divorciado', 'Viúvo', 'Outro']
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
@@ -247,13 +242,8 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
                       onChanged: (newValue) {
                         provider.escolaridade = newValue;
                       },
-                      items: <String>[
-                        'Ensino Fundamental',
-                        'Ensino Médio',
-                        'Ensino Superior',
-                        'Pós-Graduação',
-                        'Outro'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: <String>['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Outro']
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
@@ -290,14 +280,8 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
                       onChanged: (newValue) {
                         provider.cor = newValue;
                       },
-                      items: <String>[
-                        'Branco',
-                        'Negro',
-                        'Pardo',
-                        'Amarelo',
-                        'Indígena',
-                        'Outro'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: <String>['Branco', 'Negro', 'Pardo', 'Amarelo', 'Indígena', 'Outro']
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
@@ -313,17 +297,17 @@ Future<void> cadastrarPessoaPopUP(BuildContext context) async {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    String cadastroBuffer = provider.cadastrarPessoa();
+                  onPressed: () async {
+                    String cadastroBuffer = await provider.cadastrarPessoa();
                     dialogConfirm(context, cadastroBuffer);
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.pessoaAdd,
+                    textStyle: AppFonts.titleButton,
+                  ),
                   child: Text(
                     'Cadastrar',
                     style: AppFonts.titleBar,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.pessoaAdd,
-                    textStyle: AppFonts.titleButton,
                   ),
                 ),
               ),
